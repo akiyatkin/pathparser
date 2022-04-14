@@ -6,8 +6,13 @@ const getExt = (str) => {
     const i = str.lastIndexOf('.')
     return ~i ? str.substring(i + 1) : ''
 }
+const getRoot = (str) => {
+    const i = str.indexOf('/',1)
+    return ~i ? str.substring(1, i) : ''
+}
 
 export const pathparser = request => {
+    //request всегда со слэшом в начале
     try {
         request = decodeURI(request)
     } catch { }
@@ -22,5 +27,6 @@ export const pathparser = request => {
     }
     const ext = getExt(path)
     const secure = !!~path.indexOf('/.')
-    return {secure, path, ext, get}
+    const root = getRoot(path)
+    return {secure, root, path, ext, get}
 }
