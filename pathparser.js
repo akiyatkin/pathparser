@@ -5,16 +5,12 @@ const explode = (sep, str) => {
 const getExt = (str) => {
     const i = str.lastIndexOf('.')
     return ~i ? str.substring(i + 1) : ''
-    // const ext = ~i ? str.substring(i + 1) : ''
-    // return /^\w{3,4}$/.test(ext) ? ext : ''
 }
 
 export const pathparser = request => {
     try {
         request = decodeURI(request)
-    } catch (e) {
-        console.log(e)
-    }
+    } catch { }
     const [path, params] = explode('?', request)
     const get = { };
     if (params) {
@@ -22,7 +18,6 @@ export const pathparser = request => {
     	for (let i = 0; i < ar.length; i++) {
             const [key, value] = explode('=', ar[i])
             get[key] = value;
-    		//get[decodeURI(key)] = decodeURI(value);
     	}
     }
     const ext = getExt(path)
